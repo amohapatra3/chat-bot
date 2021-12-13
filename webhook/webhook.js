@@ -304,7 +304,8 @@ app.post("/", express.json(), (req, res) => {
     };
     await fetch(ENDPOINT_URL + "/application/messages", requestOptions);
     let filteredProductName = agent.parameters.category;
-    if (filteredProductName !== "") {
+
+    if (filteredProductName) {
       let requestOptions = {
         method: "PUT",
         headers: {
@@ -347,10 +348,12 @@ app.post("/", express.json(), (req, res) => {
         },
         redirect: "follow",
       };
-      await fetch(
+      let request = await fetch(
         ENDPOINT_URL + "/application/tags/" + tag,
         postRequestOptions
       );
+      let response = await request.text();
+      console.log(response);
     }
 
     agent.add("here are the filtered products!");
@@ -440,7 +443,9 @@ app.post("/", express.json(), (req, res) => {
       redirect: "follow",
     };
 
-    await fetch(ENDPOINT_URL + "/application", requestOptions);
+    let request = await fetch(ENDPOINT_URL + "/application", requestOptions);
+    let response = await request.text();
+    console.log(response);
 
     agent.add("Navigating to sign up page...");
     requestOptions = {
